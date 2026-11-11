@@ -7,7 +7,8 @@ const cors = require('cors');
 const path = require('path');
 const http = require('http');
 
-const FLUTTER_DIR = '/workspace/star-explorer-flutter/build/web';
+const FLUTTER_DIR = process.env.FLUTTER_DIR
+  || path.resolve(__dirname, '../frontend/build/web');
 const BACKEND_HOST = process.env.BACKEND_HOST || '127.0.0.1';
 const BACKEND_PORT = process.env.BACKEND_PORT || 3001;
 const PORT = process.env.PORT || 8080;
