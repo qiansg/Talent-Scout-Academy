@@ -4,7 +4,7 @@ const path = require('path');
 const os = require('os');
 require('dotenv').config();
 
-const { initSchema } = require('./db');
+const { db, initSchema } = require('./db');
 const { seed } = require('./init-db');
 
 const authRoutes = require('./routes/auth');
@@ -61,8 +61,9 @@ async function startServer() {
     initSchema();
     console.log('✅ 数据库连接成功');
     
-    // 如果需要种子数据（开发环境）
-    if (process.env.SEED_DB === 'true' || !require('better-sqlite3')(path.join(__dirname, '../data/star_explorer.db')).prepare('SELECT COUNT(*) as count FROM tasks').get().count) {
+    // 种子数据：只要用户表为空就重新灌（seed 内部全部 INSERT OR REPLACE，幂等）
+    const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
+    if (process.env.SEED_DB === 'true' || userCount === 0) {
       await seed();
     }
     
