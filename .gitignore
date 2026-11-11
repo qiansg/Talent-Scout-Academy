@@ -1,0 +1,53 @@
+# =================================================================
+# Star Explorer Academy · Git 忽略规则
+# =================================================================
+
+# Node / 后端依赖
+backend/node_modules/
+backend/*.log
+backend/.env
+backend/.env.*
+backend/data/*.db
+backend/data/*.db-*
+
+# Flutter / Dart
+frontend/build/
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.metadata
+frontend/.idea/
+frontend/.vscode/
+frontend/pubspec.lock
+
+# Android
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/app/build/
+frontend/android/app/*.iml
+frontend/android/*.iml
+
+# iOS
+frontend/ios/Pods/
+frontend/ios/.symlinks/
+frontend/ios/.flutter-plugins-dependencies
+frontend/ios/Flutter/Debug.xcconfig
+frontend/ios/Flutter/Release.xcconfig
+
+# macOS
+frontend/macos/Pods/
+frontend/macos/.symlinks/
+
+# Windows
+frontend/windows/flutter/ephemeral/
+
+# Web
+frontend/web/packages/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/

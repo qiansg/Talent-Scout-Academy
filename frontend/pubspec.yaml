@@ -1,0 +1,60 @@
+name: star_explorer
+description: 星探学院 Star Explorer Academy - 星际探索主题儿童学习App
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+
+  # ============ PRD 规范状态管理 ============
+  # Riverpod (Flutter 官方推荐，类型安全，可测试)
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # ============ PRD 规范网络层 ============
+  dio: ^5.4.3+1
+
+  # ============ PRD 规范路由 ============
+  go_router: ^14.2.0
+
+  # ============ PRD 规范离线存储 ============
+  # Hive: 轻量级 NoSQL 本地数据库（关卡进度/用户配置/离线缓存）
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # ============ PRD 规范 2D 动画 ============
+  # Rive: 角色表情动画 / 场景过渡 / 粒子特效
+  rive: ^0.13.2
+
+  # ============ UI 组件 ============
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.10+1
+  shimmer: ^3.0.0
+  page_transition: ^2.1.0
+
+  # ============ 工具 ============
+  intl: ^0.19.0
+  uuid: ^4.4.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  # riverpod 代码生成（build_runner）
+  build_runner: ^2.4.11
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  # ============ Assets 目录 ============
+  assets:
+    - assets/animations/
+    - assets/images/
+    - assets/rive/

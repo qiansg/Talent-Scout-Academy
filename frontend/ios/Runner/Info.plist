@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- 允许 HTTP 明文请求（开发阶段，指向本地 Node.js 后端） -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <!-- 本机/内网 API -->
+            <key>localhost</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+            <key>127.0.0.1</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+            <key>10.0.2.2</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+            <!-- 内网网段 -->
+            <key>10.0.0.0/8</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+            <key>192.168.0.0/16</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+        </dict>
+    </dict>
+    
+    <!-- 网络权限说明 -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>星探学院需要访问本地 API 服务器以提供学习内容</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>用于附近设备发现</string>
+    
+    <!-- 麦克风权限 -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>星仔需要通过麦克风与你进行语音对话</string>
+    
+    <!-- 相机权限 -->
+    <key>NSCameraUsageDescription</key>
+    <string>用于拍摄现实挑战的照片上传</string>
+    
+    <!-- 相册权限 -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>用于选择照片上传</string>
+</dict>
+</plist>

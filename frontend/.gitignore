@@ -1,0 +1,50 @@
+# Flutter
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Flutter Plugin
+.ios/
+.android/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# CocoaPods
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+
+# Android
+android/local.properties
+android/.gradle/
+android/app/.gradle/
+android/gradle/
+android/gradlew
+android/gradlew.bat
+android/app/google-services.json
+
+# Xcode
+ios/Runner.xcworkspace/
+ios/Flutter/App.framework
+
+# Generated
+
+# Coverage
+coverage/
+
+# Misc
+.DS_Store
+.env
+.env.local
+*.log
+*.tmp
