@@ -1,8 +1,8 @@
 @echo off
 REM =================================================================
-REM æ˜Ÿæ¢å­¦é™¢ Â· æœ¬åœ°ä¸€é”®å¯åŠ¨è„šæœ¬ï¼ˆWindowsï¼‰
-REM ç›®å½•ç»“æ„: ä»“åº“æ ¹\backend + ä»“åº“æ ¹\frontend
-REM ç”¨æ³•: åŒå‡»è¿è¡Œ æˆ– cmd é‡Œ cd åˆ°ä»“åº“æ ¹å run-local.bat
+REM ĞÇÌ½Ñ§Ôº ¡¤ ±¾µØÒ»¼üÆô¶¯½Å±¾£¨Windows£©
+REM ÓÃ·¨: Ë«»÷ÔËĞĞ »ò cmd Àï cd µ½Ä¿Â¼ºó run-local.bat
+REM Ä¿Â¼½á¹¹: ²Ö¿â¸ù/backend  +  ²Ö¿â¸ù/frontend
 REM =================================================================
 setlocal enabledelayedexpansion
 
@@ -11,20 +11,20 @@ set "BACKEND_DIR=%PROJECT_ROOT%\backend"
 set "FRONTEND_DIR=%PROJECT_ROOT%\frontend"
 
 echo.
-echo [0/6] æ£€æŸ¥ä¾èµ– ...
+echo [0/6] ¼ì²éÒÀÀµ ...
 where node >nul 2>&1
 if not %ERRORLEVEL%==0 (
-  echo       [!] æœªå®‰è£… Node.jsï¼Œè¯·å…ˆå®‰è£… https://nodejs.org
+  echo       [!] Î´°²×° Node.js£¬ÇëÏÈ°²×° https://nodejs.org
   pause
   exit /b 1
 )
 if not exist "%BACKEND_DIR%\node_modules" (
-  echo       å®‰è£…åç«¯ä¾èµ– npm install ...
+  echo       °²×°ºó¶ËÒÀÀµ npm install ...
   pushd "%BACKEND_DIR%"
   call npm install
   popd
 ) else (
-  echo       åç«¯ä¾èµ–å·²å­˜åœ¨
+  echo       ºó¶ËÒÀÀµÒÑ´æÔÚ
 )
 
 echo.
@@ -34,16 +34,16 @@ if %ERRORLEVEL%==0 (
   adb devices 2>nul | findstr /r "device$" >nul
   if !ERRORLEVEL!==0 (
     adb reverse tcp:3001 tcp:3001
-    echo       ç«¯å£è½¬å‘ tcp:3001 å®Œæˆ
+    echo       ¶Ë¿Ú×ª·¢ tcp:3001 Íê³É
   ) else (
-    echo       æœªæ£€æµ‹åˆ°è®¾å¤‡ â€” è¯· USB è¿æ‰‹æœºå¹¶å¼€å¯ USB è°ƒè¯•
+    echo       Î´¼ì²âµ½Éè±¸ ¡ª Çë USB Á¬ÊÖ»ú²¢¿ªÆô USB µ÷ÊÔ
   )
 ) else (
-  echo       adb ä¸åœ¨ PATH â€” è·³è¿‡
+  echo       adb ²»ÔÚ PATH ¡ª Ìø¹ı
 )
 
 echo.
-echo [2/6] æ¸…ç†ç«¯å£å ç”¨ ...
+echo [2/6] ÇåÀí¶Ë¿ÚÕ¼ÓÃ ...
 for %%p in (3001 8080) do (
   for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":%%p " ^| findstr LISTENING') do (
     echo       Kill PID %%a on port %%p
@@ -53,46 +53,42 @@ for %%p in (3001 8080) do (
 timeout /t 1 /nobreak >nul
 
 echo.
-echo [3/6] å¯åŠ¨åç«¯ API (0.0.0.0:3001) ...
+echo [3/6] Æô¶¯ºó¶Ë API (0.0.0.0:3001) ...
 start "star-backend" /MIN cmd /c "cd /d "%BACKEND_DIR%" && node src/server.js"
 timeout /t 3 /nobreak >nul
-curl -s http://localhost:3001/api/health >nul 2>&1 && echo       åç«¯å°±ç»ª || echo       åç«¯å¯èƒ½æœªå¯åŠ¨
+curl -s http://localhost:3001/api/health >nul 2>&1 && echo       ºó¶Ë¾ÍĞ÷ || echo       ºó¶Ë¿ÉÄÜÎ´Æô¶¯
 
 echo.
-echo [4/6] æ£€æŸ¥ Flutter Web æ„å»ºäº§ç‰© ...
+echo [4/6] ¼ì²é Flutter Web ¹¹½¨²úÎï ...
 if exist "%FRONTEND_DIR%\build\web\index.html" (
-  echo       å·²å­˜åœ¨ build\web
+  echo       ÒÑ´æÔÚ build/web
 ) else (
-  echo       æœªæ‰¾åˆ° build\web â€” Web é¢„è§ˆ (8080) ä¸å¯ç”¨
-  echo       éœ€è¦æ—¶æ‰§è¡Œ: cd frontend ^&^& flutter build web
+  echo       Î´ÕÒµ½ build/web ¡ª Web Ô¤ÀÀ (8080) ½«²»¿ÉÓÃ
+  echo       ĞèÒªÊ±Ö´ĞĞ: cd frontend ^&^& flutter build web
 )
 
 echo.
-echo [5/6] å¯åŠ¨ Flutter UI + API ä»£ç† (0.0.0.0:8080) ...
-if exist "%FRONTEND_DIR%\build\web\index.html" (
-  start "star-web" /MIN cmd /c "cd /d "%BACKEND_DIR%" && node serve-web.js"
-  timeout /t 2 /nobreak >nul
-  curl -s -o nul -w "%%{http_code}" http://localhost:8080 | findstr "200" >nul 2>&1 && echo       UI å°±ç»ª || echo       UI æœªå°±ç»ªï¼ŒæŸ¥çœ‹çª—å£æ—¥å¿—
-) else (
-  echo       è·³è¿‡ï¼ˆç¼º build\webï¼Œç›´æ¥ç”¨ flutter runï¼‰
-)
+echo [5/6] Æô¶¯ Flutter UI + API ´úÀí (0.0.0.0:8080) ...
+start "star-web" /MIN cmd /c "cd /d "%BACKEND_DIR%" && node serve-web.js"
+timeout /t 2 /nobreak >nul
+curl -s -o nul -w "%%{http_code}" http://localhost:8080 | findstr "200" >nul 2>&1 && echo       UI ¾ÍĞ÷ || echo       UI Î´¾ÍĞ÷£¨¶àÎªÈ± build/web£¬ÓÃ flutter run ´úÌæ£©
 
 echo.
-echo [6/6] å®Œæˆ
+echo [6/6] Íê³É
 echo.
 echo =====================================================
-echo   ğŸš€ æ˜Ÿæ¢å­¦é™¢
+echo   * ĞÇÌ½Ñ§Ôº
 echo   API         http://localhost:3001/api
-echo   Web é¢„è§ˆ    http://localhost:8080  (éœ€å…ˆ flutter build web)
-echo   æµ‹è¯•è´¦å·    child@demo.com / 123456
-echo               parent@demo.com / 123456
+echo   Web Ô¤ÀÀ    http://localhost:8080  (ĞèÏÈ flutter build web)
+echo   ²âÊÔÕËºÅ    child@demo.com / 123456
+echo              parent@demo.com / 123456
 echo.
-echo   çœŸæœºè¿è¡Œ:
+echo   Õæ»úÔËĞĞ:
 echo     cd frontend
 echo     flutter pub get
 echo     flutter run
 echo.
-echo   åœæ­¢: taskkill /F /IM node.exe
+echo   Í£Ö¹: taskkill /F /IM node.exe
 echo =====================================================
 echo.
 pause
